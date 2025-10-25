@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MerryWeather-Time - Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/app.js"></script>
+</head>
+<body style="background-image: url('<%= bgUrl %>');">
+  <div class="overlay"></div>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="<%= logoUrl %>" class="logo-sm" alt="logo">
+      <h3>MerryWeather-Time</h3>
+    </div>
+    <nav>
+      <a href="/dashboard" class="active">Chấm công</a>
+      <a href="#history" onclick="showTab('history')">Lịch sử</a>
+      <a href="#staff" onclick="showTab('staff')">Danh sách nhân viên</a>
+      <a href="#rules" onclick="showTab('rules')">Luật lệ</a>
+      <a href="#admin" onclick="showTab('admin')">Quản trị</a>
+      <a href="/logout">Đăng xuất</a>
+    </nav>
+    <footer class="sidebar-footer">
+      <img src="/assets/mw-small.png" alt="mw" style="width:40px;">
+      <div>© MerryWeather</div>
+    </footer>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="notice-bar">
+        <% if(notices && notices.length) { %>
+          <marquee behavior="scroll" direction="left"><%= notices[0].text %></marquee>
+        <% } else { %>
+          <span>Chưa có thông báo</span>
+        <% } %>
+      </div>
+      <div class="user">Xin chào, <strong><%= user.name %></strong></div>
+    </header>
+
+    <section class="content" id="tab-chamcong">
+      <h2>Chấm công</h2>
+      <div class="card center">
+        <form method="post" action="/onduty" style="display:inline-block;margin-right:12px;">
+          <button class="btn-large btn-green" id="btn-onduty">🚨 OnDuty</button>
+        </form>
+        <form method="post" action="/offduty" style="display:inline-block;">
+          <button class="btn-large btn-red" id="btn-offduty">✅ OffDuty</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="content hide" id="history">
+      <h2>Lịch sử chấm công</h2>
+      <table class="table">
+        <thead><tr><th>Email</th><th>Trạng thái</th><th>Thời gian</th></tr></thead>
+        <tbody>
+          <% shifts.forEach(s => { %>
+            <tr><td><%= s.email %></td><td><%= s.type %></td><td><%= s.time %></td></tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content hide" id="staff">
+      <h2>Danh sách nhân viên</h2>
+      <table class="table">
+        <thead><tr><th>Tên</th><th>Email</th><th>Vai trò</th></tr></thead>
+        <tbody>
+          <% users.forEach(u => { %>
+            <tr><td><%= u.name %></td><td><%= u.email %></td><td><%= u.role %></td></tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content hide" id="rules">
+      <h2>Luật lệ / Nội quy</h2>
+      <% rules.forEach(r=>{ %>
+        <div class="rule">
+          <h4><%= r.title %></h4>
+          <p><%= r.content %></p>
+        </div>
+      <% }) %>
+
+      <% if(user.role === "admin") { %>
+      <form method="post" action="/admin/add-rule" class="card">
+        <h4>Thêm Luật lệ</h4>
+        <input name="title" placeholder="Tiêu đề" required>
+        <textarea name="content" placeholder="Nội dung" required></textarea>
+        <button class="btn-red">Lưu luật lệ</button>
+      </form>
+      <% } %>
+    </section>
+
+    <section class="content hide" id="admin">
+      <h2>Quản trị</h2>
+      <% if(user.role === "admin") { %>
+      <div class="card">
+        <h4>Tạo nhân viên</h4>
+        <form method="post" action="/admin/add-user">
+          <input name="name" placeholder="Tên" required>
+          <input name="email" placeholder="Email" required>
+          <input name="password" placeholder="Mật khẩu" required>
+          <select name="role"><option value="guard">guard</option><option value="admin">admin</option></select>
+          <button class="btn-red">Tạo</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h4>Gửi thông báo nhanh</h4>
+        <form method="post" action="/admin/add-notice">
+          <input name="text" placeholder="Nội dung thông báo" required>
+          <button class="btn-green">Gửi</button>
+        </form>
+      </div>
+      <% } else { %>
+        <div class="card">Bạn không có quyền admin.</div>
+      <% } %>
+    </section>
+
+  </main>
+
+  <audio id="sfx-on" src="/assets/on.mp3" preload="auto"></audio>
+  <audio id="sfx-off" src="/assets/off.mp3" preload="auto"></audio>
+</body>
+</html>

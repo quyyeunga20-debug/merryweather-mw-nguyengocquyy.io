@@ -1,0 +1,54 @@
+:root{
+  --red:#c00;
+  --dark:#0f0f0f;
+  --muted:#222;
+  --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+html,body{height:100%; margin:0; font-family:Inter, Poppins, Arial; color:#fff}
+body{background-size:cover; background-position:center; background-repeat:no-repeat; position:relative}
+.overlay{position:fixed; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6)); pointer-events:none}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:linear-gradient(180deg,var(--muted),#111);padding:20px;display:flex;flex-direction:column;align-items:center}
+.brand{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
+.logo-sm{width:72px;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,0.5)}
+.sidebar h3{margin:8px 0 0 0;color:var(--red);font-size:18px}
+.sidebar nav{margin-top:30px;width:100%}
+.sidebar nav a{display:block;padding:10px 12px;color:#ddd;text-decoration:none;border-radius:8px;margin-bottom:8px}
+.sidebar nav a.active, .sidebar nav a:hover{background:rgba(255,255,255,0.03); color:var(--red)}
+.sidebar-footer{margin-top:auto;text-align:center; font-size:12px;color:#bbb}
+
+.main{margin-left:240px;padding:22px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.notice-bar{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:8px;color:#ffd; width:70%}
+.user{font-size:14px;color:#ddd}
+
+.content{background:rgba(0,0,0,0.35); padding:18px; border-radius:12px; margin-bottom:18px; backdrop-filter: blur(4px); box-shadow:0 6px 24px rgba(0,0,0,0.6)}
+.card{background:rgba(255,255,255,0.03); padding:18px; border-radius:10px; margin:12px 0}
+.center{text-align:center}
+
+.btn-large{padding:18px 36px;border-radius:12px;font-size:18px;border:none;cursor:pointer; box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.btn-green{background:linear-gradient(180deg,#2ecc71,#27ae60); color:#fff}
+.btn-red{background:linear-gradient(180deg,var(--red),#900); color:#fff}
+.btn-red:hover{filter:brightness(0.95)}
+.btn-green:hover{filter:brightness(0.95)}
+
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.05); text-align:left; color:#eee}
+input, textarea, select { width:100%; padding:10px; margin:6px 0; border-radius:8px; border:none; background:rgba(255,255,255,0.02); color:#fff}
+textarea{min-height:100px; resize:vertical}
+
+.login-box{position:relative; width:360px; margin:80px auto; padding:24px; background:rgba(0,0,0,0.5); border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.logo-lg{width:110px; display:block; margin:0 auto 12px auto}
+.msg{padding:8px;border-radius:8px;margin-bottom:10px}
+.msg.error{background:rgba(255,0,0,0.12); color:#ffdddd}
+.small{font-size:12px;color:#bbb;margin-top:8px}
+
+.hide{display:none}
+
+/* Responsive */
+@media (max-width:900px){
+  .sidebar{position:relative;width:100%;display:flex;flex-direction:row;gap:10px;padding:10px}
+  .main{margin-left:0;padding:12px}
+  .logo-sm{width:48px}
+  .login-box{width:90%}
+}

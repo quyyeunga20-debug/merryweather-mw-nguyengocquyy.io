@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MerryWeather-Time - Đăng nhập</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="page-login" style="background-image: url('<%= bgUrl || "/assets/bg.jpg" %>');">
+  <div class="overlay"></div>
+  <div class="login-box">
+    <img src="<%= logoUrl %>" alt="Logo" class="logo-lg">
+    <% if(error && error.length) { %>
+      <div class="msg error"><%= error %></div>
+    <% } %>
+    <form method="post" action="/login">
+      <input required name="email" placeholder="Email" type="email">
+      <input required name="password" placeholder="Mật khẩu" type="password">
+      <button class="btn-red">Đăng nhập</button>
+    </form>
+    <div class="small">Admin: <%= process.env.ADMIN_EMAIL %> / mật khẩu bạn đã nhận</div>
+  </div>
+</body>
+</html>
